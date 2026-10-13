@@ -1,0 +1,12 @@
+build/
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.idea/
+*.iml
+firebase-debug.log
+database-debug.log
+.flutter-plugins-dependencies
+.vscode/
+travel_planner_flutlab_v3/

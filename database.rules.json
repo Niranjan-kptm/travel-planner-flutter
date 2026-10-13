@@ -1,0 +1,53 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "profile": {
+          ".validate": "newData.hasChildren(['email', 'updatedAt'])",
+          "uid": { ".validate": "newData.val() === $uid" },
+          "name": { ".validate": "newData.isString() && newData.val().length <= 60" },
+          "email": { ".validate": "newData.isString() && newData.val() === auth.token.email" },
+          "phone": { ".validate": "newData.isString() && newData.val().length <= 20" },
+          "homeCity": { ".validate": "newData.isString() && newData.val().length <= 60" },
+          "preferredTravelType": { ".validate": "newData.isString() && newData.val().length <= 30" },
+          "interests": { "$i": { ".validate": "newData.isString() && newData.val().length <= 40" } },
+          "defaultBudget": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000000" },
+          "createdAt": { ".validate": "newData.isNumber()" },
+          "updatedAt": { ".validate": "newData.isNumber()" },
+          "$other": { ".validate": false }
+        },
+        "trips": {
+          ".indexOn": ["updatedAt", "startDate"],
+          "$tripId": {
+            ".validate": "$tripId.length <= 64 && newData.hasChildren(['destination', 'startDate', 'endDate', 'budget', 'travellers', 'travelType', 'updatedAt'])",
+            "destination": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 80" },
+            "startDate": { ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/)" },
+            "endDate": { ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/) && newData.val() >= newData.parent().child('startDate').val()" },
+            "budget": { ".validate": "newData.isNumber() && newData.val() > 0 && newData.val() <= 10000000" },
+            "travellers": { ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 20" },
+            "travelType": { ".validate": "newData.isString() && newData.val().length <= 30" },
+            "preferences": { "$i": { ".validate": "newData.isString() && newData.val().length <= 40" } },
+            "itinerary": {
+              "$day": {
+                "day": { ".validate": "newData.isNumber()" },
+                "title": { ".validate": "newData.isString() && newData.val().length <= 120" },
+                "activities": { "$a": { ".validate": "newData.isString() && newData.val().length <= 300" } },
+                "$other": { ".validate": false }
+              }
+            },
+            "notes": { ".validate": "newData.isString() && newData.val().length <= 2000" },
+            "estimatedCost": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+            "createdAt": { ".validate": "newData.isNumber()" },
+            "updatedAt": { ".validate": "newData.isNumber()" },
+            "$other": { ".validate": false }
+          }
+        },
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}

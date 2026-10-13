@@ -1,0 +1,8 @@
+analyzer:
+  errors:
+    prefer_const_constructors: ignore
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**

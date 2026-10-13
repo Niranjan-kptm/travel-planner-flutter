@@ -1,0 +1,23 @@
+name: travel_planner
+description: AI-powered (rule-based) personalized travel planner with Firebase Authentication, Firebase Realtime Database (cloud, live sync) and SQLite / browser storage (offline).
+publish_to: 'none'
+version: 2.0.0+2
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"   # Dart 3 required; verified with Flutter 3.19.6 and 3.47.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: ^2.2.0                      # local SQLite (Android / iOS)
+  path: ^1.8.0                         # building the DB file path
+  http: ">=0.13.5 <2.0.0"              # Firebase Auth + Realtime Database REST APIs
+  shared_preferences: ^2.0.15          # session, profile cache, web trip storage (localStorage)
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  sqflite_common_ffi: ">=2.2.0 <3.0.0" # runs the real SqliteStore in unit tests (desktop only)
+
+flutter:
+  uses-material-design: true
